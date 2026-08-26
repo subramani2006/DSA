@@ -3,8 +3,8 @@ public:
     int findsum(vector<int>&nums , int n )
     {
         int sum = 0;
-        for(int i =0 ; i<=nums.size()-1 ; i++){
-            sum +=ceil((double)nums[i]/n);
+        for(int num : nums){
+            sum +=(num+n-1)/n;
         }
     return sum;
     }
