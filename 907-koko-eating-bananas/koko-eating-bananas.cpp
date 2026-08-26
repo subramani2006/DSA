@@ -9,7 +9,7 @@ public:
             int mid = low+(high-low)/2;
 
             for(int bananas : piles){
-                hours+=(bananas+mid-1)/mid;
+                hours+=(bananas+mid-1)/mid; //hours+=ceil((double)banans/mid)
             }
             if(hours<=h){
                 high = mid-1;
