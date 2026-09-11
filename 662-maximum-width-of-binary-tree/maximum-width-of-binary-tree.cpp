@@ -20,14 +20,14 @@ public:
 
         while (!q.empty()) {
             int size = q.size();
-            long long minIndex = q.front().second;
-            long long first, last;
+            long long minIndex = q.front().second; 
+            long long first = 0, last = 0;
 
             for (int i = 0; i < size; i++) {
                 auto [node, idx] = q.front();
                 q.pop();
 
-                long long curIndex = idx - minIndex; 
+                long long curIndex = idx - minIndex; // prevent overflow
                 if (i == 0) first = curIndex;
                 if (i == size - 1) last = curIndex;
 
@@ -37,6 +37,5 @@ public:
             maxWidth = max(maxWidth, last - first + 1);
         }
         return (int)maxWidth;
-        
     }
 };
