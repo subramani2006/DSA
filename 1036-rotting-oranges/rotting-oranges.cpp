@@ -1,44 +1,53 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        int rows = grid.size();
-        int cols = grid[0].size();
-        queue<pair<int,int>> q;
-        int fresh = 0;
+        int n = grid.size();
+        int m = grid[0].size();
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (grid[i][j] == 2) {
-                    q.push({i, j});
-                } else if (grid[i][j] == 1) {
-                    fresh++;
-                }
+       queue<pair<int,int>>q;
+
+       int fresh = 0;
+
+       for(int i = 0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(grid[i][j]==1)
+             fresh++;
+            if(grid[i][j]==2){
+                q.push({i,j});
             }
         }
+       }
+       int mins = 0;
+       int delrow[] = {-1,0,+1,0};
+       int delcol[]= {0,+1,0,-1};
+       while(!q.empty()&&fresh>0){
 
-        if (fresh == 0) return 0;
+        int size = q.size();
 
-        int minutes = -1;
-        vector<int> dirX = {0, 0, 1, -1};
-        vector<int> dirY = {1, -1, 0, 0};
+        for(int i = 0;i<size;i++){
 
-        while (!q.empty()) {
-            int size = q.size();
-            minutes++;
-            for (int k = 0; k < size; k++) {
-                auto [x, y] = q.front(); q.pop();
-                for (int d = 0; d < 4; d++) {
-                    int nx = x + dirX[d];
-                    int ny = y + dirY[d];
-                    if (nx >= 0 && ny >= 0 && nx < rows && ny < cols && grid[nx][ny] == 1) {
-                        grid[nx][ny] = 2;
-                        fresh--;
-                        q.push({nx, ny});
-                    }
+            int row = q.front().first;
+            int col = q.front().second;
+            q.pop();
+            for(int j = 0;j<4;j++){
+                int nrow = row+delrow[j];
+                int ncol = col + delcol[j];
+
+                if(nrow>=0&&nrow<n&&ncol>=0&&ncol<m&&grid[nrow][ncol]==1){
+                    grid[nrow][ncol]=2;
+                    fresh--;
+                    q.push({nrow,ncol});
                 }
             }
+        
+            
         }
+        mins++;
 
-        return fresh == 0 ? minutes : -1;
+       }
+       if(fresh>0)
+          return -1;
+        return mins;
+        
     }
 };
